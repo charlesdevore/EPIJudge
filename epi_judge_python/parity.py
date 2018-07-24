@@ -4,7 +4,31 @@ from test_framework import generic_test
 def parity(x):
 
     #return brute_force_parity(x)
-    return improved_parity(x)
+    #return improved_parity(x)
+
+    PCP = PreComputedParity()
+    return PCP.compute(x)
+
+
+class PreComputedParity:
+
+    def PreComputedParity():
+
+        self.mask_size = 16
+        self.bit_mask = 0xFFFF
+
+        self.data = {}
+
+        return self
+
+    def compute(self, x):
+
+        if x in self.data:
+            return self.data[x]
+
+        else:
+            self.data[x] = improved_parity(x)
+            return self.data[x]
 
 
 def improved_parity(x):
