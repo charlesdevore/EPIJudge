@@ -12,17 +12,29 @@ def parity(x):
 
 class PreComputedParity:
 
-    def PreComputedParity():
+    def __init__(self):
 
         self.mask_size = 16
         self.bit_mask = 0xFFFF
 
         self.data = {}
 
-        return self
+        return 
 
     def compute(self, x):
 
+        result = False
+
+        while x:
+
+            masked_value = x & self.bit_mask
+            result ^= self.compute_masked_result(masked_value)
+            x >>= self.mask_size
+        
+        return result
+
+    def compute_masked_result(self, x):
+        
         if x in self.data:
             return self.data[x]
 
